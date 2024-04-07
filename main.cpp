@@ -36,12 +36,20 @@ void displayDefaultItem(Product itemToFind);
 int main(){
     // initialize class with default item as example
     Product defaultItem = {1, "Default Item", 9.99, 10};
-    Inventory inventory(defaultItem); 
+    Inventory inventory(defaultItem);
+    Product item2 = {2, "Item 2", 10.00, 12};
+    int itemCount;
 
     // Dynammically allocate a pointer to an inventory obj
     // Inventory *invPtr = nullptr;
     // invPtr = new Inventory(defaultItem);
-    
+
+    // smart pointer
+    // unique_ptr<vector<Product>> inventory(new vector<Product>());
+
+    // adding elements to inventory
+    // inventory->push_back({2, "Knife", 34.99, 5});
+
     Product itemToAdd;
     vector<Product> allItems;
     Product itemToFind, itemToRemove;
@@ -85,6 +93,13 @@ int main(){
     // DISPLAY DEFAULT ITEM
     itemToFind = inventory.getItem(1);
     displayDefaultItem(itemToFind);
+
+    // add item
+    inventory.addItem(item2);
+
+    // display total items
+    itemCount = inventory.getItemCount();
+    cout << "Total items in inventory: " << itemCount << endl;
 
     // // REMOVE AN ITEM
     // // remove the element from the vector based on provided ID

@@ -17,8 +17,15 @@ Inventory::Inventory(Product defaultItem) : allItems(vector<Product>())
 {
     // initializes a default item as an example to user
     allItems.push_back(defaultItem); 
+
+    // increment the total items in inventory
+    itemsCount++;
 };
 
+int Inventory::getItemCount() const
+{
+    return itemsCount;
+}
 
 //*********************************************************
 // This utility function converts a string to title case  *

@@ -19,9 +19,15 @@ class Inventory
         // Store all items in a vector of Product objects
         vector<Product> allItems;
 
+        // Get a count of all items in the inventory
+        static int itemsCount;
+
     public:
         // Constructor to accept default argument
         Inventory(Product);
+
+        // Accessor function to get inventory count
+        int getItemCount() const;
 
         // Member function to add an item to the inventory
         void addItem(Product item);
@@ -35,5 +41,8 @@ class Inventory
         // Display entire inventory of products
         vector<Product> getAllItems() const;
 };
+
+// Definition of static member variable itemsCount
+int Inventory::itemsCount = 1;
 
 #endif
