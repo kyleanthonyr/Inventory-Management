@@ -20,6 +20,9 @@ class Inventory
         vector<Product> allItems;
 
     public:
+        // Constructor to accept default argument
+        Inventory(Product);
+
         // Member function to add an item to the inventory
         void addItem(Product item);
 

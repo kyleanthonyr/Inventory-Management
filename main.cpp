@@ -33,30 +33,36 @@ using namespace std;
 void displayItemInfo(Product);
 
 int main(){
-    // variable definition
-    Inventory inventory;
+    // initialize class with default item as example
+    Product defaultItem = {1, "Default Item", 9.99, 10};
+    Inventory inventory(defaultItem); 
+
+    // Dynammically allocate a pointer to an inventory obj
+    // Inventory *invPtr = nullptr;
+    // invPtr = new Inventory(defaultItem);
+    
     Product itemToAdd;
     vector<Product> allItems;
     Product itemToFind, itemToRemove;
     int itemID;
 
-    // ADD AN ITEM
-    cout << "Enter an id: " << endl;
-    cin >> itemToAdd.product_id;
+    // // ADD AN ITEM
+    // cout << "Enter an id: " << endl;
+    // cin >> itemToAdd.product_id;
 
-    cout << "Enter a name: " << endl;
-    cin >> itemToAdd.name;
+    // cout << "Enter a name: " << endl;
+    // cin >> itemToAdd.name;
 
-    cout << "Enter a price: " << endl;
-    cin >> itemToAdd.price;
+    // cout << "Enter a price: " << endl;
+    // cin >> itemToAdd.price;
 
-    cout << "Enter the quantity in stock: " << endl;
-    cin >> itemToAdd.quantity;
+    // cout << "Enter the quantity in stock: " << endl;
+    // cin >> itemToAdd.quantity;
 
 
 
-    // Add item to the inventory
-    inventory.addItem(itemToAdd);
+    // // Add item to the inventory
+    // inventory.addItem(itemToAdd);
 
 
     // LIST ALL INVENTORY
@@ -69,33 +75,33 @@ int main(){
         cout << left << setw(15) << toTitleCase(item.name) << endl;
     }
 
-    // // GET AN ITEM & DESCRIPTION
-    // // get item: encompass it in a try/except block to account for NotFound error
-    // cout << "Enter the product ID to return: " << endl;
-    // cin >> itemID;
-
-    // try{
-    //     itemToFind = inventory.getItem(itemID);
-    //     displayItemInfo(itemToFind);
-    // }
-    // catch (const exception& e){
-    //     cerr << "Error! " << e.what() << endl;
-    // }
-
-    // REMOVE AN ITEM
-    // remove the element from the vector based on provided ID
-    cout << "Enter the product ID to remove: " << endl;
+    // GET AN ITEM & DESCRIPTION
+    // get item: encompass it in a try/except block to account for NotFound error
+    cout << "Enter the product ID to return: " << endl;
     cin >> itemID;
 
-    try
-    {
-        itemToRemove = inventory.removeItem(itemID);
-        cout << "The following item was removed from the inventory!" << endl;
-        displayItemInfo(itemToRemove);
+    try{
+        itemToFind = inventory.getItem(itemID);
+        displayItemInfo(itemToFind);
     }
-    catch(const exception& e){
+    catch (const exception& e){
         cerr << "Error! " << e.what() << endl;
     }
+
+    // // REMOVE AN ITEM
+    // // remove the element from the vector based on provided ID
+    // cout << "Enter the product ID to remove: " << endl;
+    // cin >> itemID;
+
+    // try
+    // {
+    //     itemToRemove = inventory.removeItem(itemID);
+    //     cout << "The following item was removed from the inventory!" << endl;
+    //     displayItemInfo(itemToRemove);
+    // }
+    // catch(const exception& e){
+    //     cerr << "Error! " << e.what() << endl;
+    // }
 
     return 0;
 }

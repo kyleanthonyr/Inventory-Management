@@ -10,6 +10,17 @@
 using namespace std;
 
 //*********************************************************
+// The constructor initializes the allItems vector of     *
+// Products and accepts a default item of Product datatype*
+//*********************************************************
+Inventory::Inventory(Product defaultItem) : allItems(vector<Product>()) 
+{
+    // initializes a default item as an example to user
+    allItems.push_back(defaultItem); 
+};
+
+
+//*********************************************************
 // This utility function converts a string to title case  *
 // and returns the modified string value.                 *
 //*********************************************************
