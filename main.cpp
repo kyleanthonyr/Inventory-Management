@@ -31,6 +31,7 @@ using namespace std;
 
 // FUNCTION PROTOTYPES
 void displayItemInfo(Product);
+void displayDefaultItem(Product itemToFind);
 
 int main(){
     // initialize class with default item as example
@@ -70,23 +71,20 @@ int main(){
     allItems = inventory.getAllItems();
 
     cout << "The following items are currently held in inventory: " << endl;
-    for (const Product& item : allItems)
+    cout << "Item Name: " << endl;
+    for (const Product &item : allItems)
     {
-        cout << left << setw(15) << toTitleCase(item.name) << endl;
+        cout << "    " << setw(20) << left 
+             << toTitleCase(item.name) 
+             << endl;
     }
 
     // GET AN ITEM & DESCRIPTION
     // get item: encompass it in a try/except block to account for NotFound error
-    cout << "Enter the product ID to return: " << endl;
-    cin >> itemID;
 
-    try{
-        itemToFind = inventory.getItem(itemID);
-        displayItemInfo(itemToFind);
-    }
-    catch (const exception& e){
-        cerr << "Error! " << e.what() << endl;
-    }
+    // DISPLAY DEFAULT ITEM
+    itemToFind = inventory.getItem(1);
+    displayDefaultItem(itemToFind);
 
     // // REMOVE AN ITEM
     // // remove the element from the vector based on provided ID
@@ -121,3 +119,15 @@ void displayItemInfo(Product item)
         << "Quantity: " << item.quantity << " in stock." << endl;
 }
 
+// This function displays the default item for user to get
+// an idea of the data to input for an item in inventory.
+void displayDefaultItem(Product itemToFind)
+{
+    try{
+        cout << "Reference the default item example for the data to enter: " << endl;
+        displayItemInfo(itemToFind);
+    }
+    catch (const exception& e){
+        cerr << "Error! " << e.what() << endl;
+    }
+}
