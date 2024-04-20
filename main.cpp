@@ -57,11 +57,22 @@ int main(){
     int itemID, menuChoice;
     char input;
 
+    // Create interactive menu session for user
     do
     {
         // DISPLAY MENU AND GET INPUT
         displayMenu();
         cin >> menuChoice;
+
+        // USER CHOICE INPUT VALIDATION
+        // Handles if the user input was not an int, or was less than 1 and greater than 4
+        while (!menuChoice || menuChoice < 1 || menuChoice > 4)
+        {
+            cout << "Please select a valid option from the menu." << endl;
+            cin.clear(); // clears any error flags
+            cin.ignore(20, '\n'); // clears input buffer
+            cin >> menuChoice;
+        }
 
         // HANDLE USER CHOICE with SWITCH 
         switch (menuChoice)
