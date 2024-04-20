@@ -4,6 +4,9 @@
 
 // This header file contains the code that defines an Inventory
 // object and it's corresponding attributes and member functions
+
+#ifndef INVENTORY_H
+#define INVENTORY_H
 #include "Product.hpp" // brings in the code for the Product struct
 #include <memory>
 #include <vector>
@@ -11,8 +14,7 @@
 
 using namespace std;
 
-#ifndef INVENTORY_H
-#define INVENTORY_H
+
 class Inventory
 {
     private:

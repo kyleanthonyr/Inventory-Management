@@ -10,26 +10,9 @@
 using namespace std;
 
 //*********************************************************
-// The constructor initializes the allItems vector of     *
-// Products and accepts a default item of Product datatype*
-//*********************************************************
-Inventory::Inventory(Product defaultItem) : allItems(vector<Product>()) 
-{
-    // initializes a default item as an example to user
-    allItems.push_back(defaultItem); 
-
-    // increment the total items in inventory
-    itemsCount++;
-};
-
-int Inventory::getItemCount() const
-{
-    return itemsCount;
-}
-
-//*********************************************************
 // This utility function converts a string to title case  *
 // and returns the modified string value.                 *
+// Used for whenever item name is outputted to console    *
 //*********************************************************
 string toTitleCase(string itemName)
 {
@@ -41,6 +24,31 @@ string toTitleCase(string itemName)
         name[0] = toupper(name[0]);
 
     return name;
+}
+
+//*********************************************************
+// The constructor initializes the allItems vector of     *
+// Products and accepts a default item of Product datatype*
+// It also increments the static member variable itemsCount
+// to keep track of the total items in inventory          *
+//*********************************************************
+Inventory::Inventory(Product defaultItem) : allItems(vector<Product>()) 
+{
+    // initializes a default item as an example to user
+    allItems.push_back(defaultItem); 
+
+    // increment the total items in inventory
+    itemsCount++;
+};
+
+//*********************************************************
+// This accessor function retrieves the total items stored*
+// in the inventory held by the static member variable    *
+// itemsCount.
+//*********************************************************
+int Inventory::getItemCount() const
+{
+    return itemsCount;
 }
 
 //*********************************************************
