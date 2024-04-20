@@ -26,7 +26,7 @@ class Inventory
 
     public:
         // Constructor to accept default argument
-        Inventory(Product);
+        Inventory();
 
         // Accessor function to get inventory count
         int getItemCount() const;
@@ -45,6 +45,6 @@ class Inventory
 };
 
 // Definition of static member variable itemsCount
-int Inventory::itemsCount = 1;
+int Inventory::itemsCount = 0;
 
 #endif

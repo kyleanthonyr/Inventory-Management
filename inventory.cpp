@@ -32,14 +32,7 @@ string toTitleCase(string itemName)
 // It also increments the static member variable itemsCount
 // to keep track of the total items in inventory          *
 //*********************************************************
-Inventory::Inventory(Product defaultItem) : allItems(vector<Product>()) 
-{
-    // initializes a default item as an example to user
-    allItems.push_back(defaultItem); 
-
-    // increment the total items in inventory
-    itemsCount++;
-};
+Inventory::Inventory() {};
 
 //*********************************************************
 // This accessor function retrieves the total items stored*
@@ -64,6 +57,9 @@ void Inventory::addItem(Product item)
     // Output message indicating new item has been added to inventory
     cout << toTitleCase(item.name) 
          << " has been added to the inventory!" << endl;
+
+    // increment the total items in inventory
+    Inventory::itemsCount++;
 }
 
 

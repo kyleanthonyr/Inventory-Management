@@ -39,8 +39,7 @@ void showInventoryCount(Inventory);
 
 int main(){
     // initialize class with default item as example
-    Product defaultItem = {1, "Default Item", 9.99, 10};
-    Inventory inventory(defaultItem);
+    Inventory inventory;
     Product item2 = {2, "Item 2", 10.00, 12};
 
     // Dynammically allocate a pointer to an inventory obj
