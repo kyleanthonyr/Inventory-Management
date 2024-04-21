@@ -1,7 +1,3 @@
-// Author: Kyle Rodriguez
-// Date: April 6th, 2024
-// COSC1437 - Dr. Nina Javaher
-
 /*
 Implement a menu-driven program that allows the user to 
 interact with the inventory system. The menu should include 
@@ -34,10 +30,16 @@ int main(){
     // VARIABLES
     Inventory inventory; // instance of inventory class
 
+    // Instance of struct Product representing an item
     Product item;
-    vector<Product> allItems; // vector of Products containing items in inventory
-    // Product itemToFind, itemToRemove;
+
+    // vector of Products containing items in inventory
+    vector<Product> allItems; 
+
+    // product id, menu selection and total invent items
     int item_id, menuChoice, itemCount;
+
+    // var for repeating menu
     char input;
 
     // Create interactive menu session for user
