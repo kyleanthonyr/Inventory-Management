@@ -10,10 +10,75 @@
 #include <algorithm>
 #include <string>
 #include <iomanip>
+#include <tuple>
 
 using namespace std;
 
 // FUNCTION DECLARATION
+
+//*********************************************************
+// This utility function validates the data type of a user*
+// input variables like ID, Name, Price and Quantity      *
+//*********************************************************
+int validate(int num)
+{
+    while(!num)
+    {
+        cout << "Please enter a valid integer: ";
+        cin.clear(); // clear any error flags
+        cin.ignore(20, '\n');
+        cin >> num;
+    }
+
+    return num; // return the validated integer
+}
+
+//*********************************************************
+// Helper function checks if input is a string            *
+//*********************************************************
+bool isString(const string& name)
+{
+    // checks if string is not a char or space 
+    for (const char ch : name)
+    {
+        // checks if a char is not a space or alphanumeric
+        if (!isalpha(ch) && !isspace(ch))
+            return false;
+    }
+
+    return !name.empty();
+}
+
+//*********************************************************
+// Overloaded function to validate string input           *
+//*********************************************************
+string validate(string name)
+{
+    while(name.empty() || !isString(name))
+    {
+        cout << "Please enter a valid name: ";
+        getline(cin, name);
+    }
+
+    return name; // return the validated name
+}
+
+//*********************************************************
+// Overloaded function to validate double input           *
+//*********************************************************
+double validate(double price)
+{
+    while(!price || price < 1)
+    {
+        cout << "Please enter a valid price: ";
+        cin.clear(); // clear any error flags
+        cin.ignore(20, '\n');
+        cin >> price;
+    }
+
+    return price; // return the validated double
+}
+
 
 //*********************************************************
 // This function displays the headers for an item such as *
@@ -22,11 +87,13 @@ using namespace std;
 void displayHeaders()
 {
     // Format output
-    cout << "+" << setfill('-') << setw(47) << "" << "+" << endl;
+    cout << "+" << setfill('-') << setw(47) << "" 
+         << "+" << endl;
 
 
     // Display headers with ID, Name, Price and Quantity
-    cout << "|" << setfill(' ') << "\t" << left <<  setw(5)  << "ID"
+    cout << "|" << setfill(' ') << "\t" 
+         << left <<  setw(5) << "ID"
          << left << setw(15)  << "Name"
          << left << setw(10)  << "Price"
          << left << setw(10)  << "Quantity\t|" << endl;
@@ -44,13 +111,17 @@ void displayItemInfo(Inventory inventory, int product_id)
     // Return struct for item with given id
     item = inventory.getItem(product_id);
 
-    cout << "+" << setfill('-') << setw(47) << "" << "+" << endl;
+    // User-friendly border around item
+    cout << "+" << setfill('-') << setw(47) << "" 
+         << "+" << endl;
 
 
     // Display Item retrieved by product id
-    cout << "|" << left << setfill(' ') << "\t" <<  setw(5)  << item.product_id
+    cout << "|" << left << setfill(' ') << "\t" 
+         <<  setw(5) << item.product_id
          << left << setw(15)  << toTitleCase(item.name)
-         << "$" <<  left << setw(10) << fixed << setprecision(2) << item.price // Set precision for floating point numbers
+         << "$" <<  left << setw(10) << fixed 
+         << setprecision(2) << item.price 
          << left << setw(5)  << item.quantity << "\t|" << endl;
 
     cout << "+" << setfill('-') << setw(47) << "" << "+" << endl;
@@ -58,14 +129,20 @@ void displayItemInfo(Inventory inventory, int product_id)
 
 }
 
+//*********************************************************
+// This is an overloaded version of displayItemInfo()     *
+// it takes a struct of type Product as an argument       *
+//*********************************************************
 void displayItemInfo(Product item)
 {
     cout << "+" << setfill('-') << setw(47) << "" << "+" << endl;
 
     // Display Item retrieved by product id
-    cout << "|" << left << setfill(' ') << "\t" <<  setw(5)  << item.product_id
+    cout << "|" << left << setfill(' ') << "\t" 
+         << setw(5) << item.product_id
          << left << setw(15)  << toTitleCase(item.name)
-         << "$" <<  left << setw(10) << fixed << setprecision(2) << item.price // Set precision for floating point numbers
+         << "$" <<  left << setw(10) << fixed 
+         << setprecision(2) << item.price 
          << left << setw(5)  << item.quantity << "\t|" << endl;
 
 }
@@ -88,21 +165,66 @@ void displayMenu()
 //*********************************************************
 // This function gets the item information from the user  *
 // such as ID, Name, Price and Quantity, and returns it as*
-// a Product struct.                                      *
+// a Product struct. It validates data types as well.     *
 //*********************************************************
-Product getProduct(Product itemToAdd){
-    // ADD AN ITEM
+Product getProductFromUser(Product itemToAdd){
+    // LOCAL VARIABLES
+    int item_id, quantity;
+    string item_name;
+    double item_price;
+
+    // VALIDATE USER INPUT AND ADD ID TO STRUCT
     cout << "Item ID: ";
-    cin >> itemToAdd.product_id;
+    cin >> item_id;
 
+    // Validate item id
+    item_id = validate(item_id);
+
+    // Add validated ID to itemToAdd struct
+    itemToAdd.product_id = item_id;
+
+
+
+    // VALIDATE USER INPUT AND ADD NAME TO STRUCT
     cout << "Item Name: ";
-    cin >> itemToAdd.name;
 
+    // Clear input buffer from previous input
+    cin.clear();
+    cin.ignore(50, '\n');
+    cin.sync();
+
+    getline(cin, item_name);
+
+    // Validate Item Name
+    item_name = validate(item_name);
+
+    // Add validated name to itemToAdd struct
+    itemToAdd.name = item_name;
+
+
+
+    // VALIDATE USER INPUT AND ADD PRICE TO STRUCT
     cout << "Item Price: ";
-    cin >> itemToAdd.price;
+    cin >> item_price;
 
-    cout << "Quantity in Stock: ";
-    cin >> itemToAdd.quantity;
+    // Validate Item Name
+    item_price = validate(item_price);
+
+    // Add validated name to itemToAdd struct
+    itemToAdd.price = item_price;
+
+
+
+    // VALIDATE USER INPUT AND ADD QUANTITY TO STRUCT
+    cout << "Quantity: ";
+    cin >> quantity;
+
+    // Validate item id
+    quantity = validate(quantity);
+
+    // Add validated ID to Product struct itemToAdd
+    itemToAdd.quantity = quantity;
+
 
     return itemToAdd;
 }
@@ -113,20 +235,9 @@ Product getProduct(Product itemToAdd){
 //*********************************************************
 void showInventory(vector<Product> allItems)
 {
-    // // Display headers with ID, Name, Price and Quantity
-    // cout << setw(5) << "ID"
-    //      << setw(15) << "Name"
-    //      << setw(10) << "Price"
-    //      << setw(10) << "Quantity" << endl;
-
-
     for (const Product &item : allItems)
     // Display the items stored in the vector allItems
     {
-    // cout << setw(5) << item.product_id
-    //      << setw(15) << item.name
-    //      << setw(10) << fixed << setprecision(2) << item.price // Set precision for floating point numbers
-    //      << setw(10) << item.quantity << endl;
         displayItemInfo(item);
     }
 }

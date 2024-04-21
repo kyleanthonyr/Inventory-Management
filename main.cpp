@@ -36,7 +36,7 @@ int main(){
 
     Product item;
     vector<Product> allItems; // vector of Products containing items in inventory
-    Product itemToFind, itemToRemove;
+    // Product itemToFind, itemToRemove;
     int item_id, menuChoice, itemCount;
     char input;
 
@@ -66,9 +66,11 @@ int main(){
             cout << setfill('-') << setw(50) << "" << endl;
             cout << "\n\t\t   ADD AN ITEM" << endl;
 
-            // Add item
-            item = getProduct(item); // get product info from user
-            inventory.addItem(item); // add product to inventory
+            // Get Product info from user, returns a Product struct
+            item = getProductFromUser(item); 
+
+            // Adds item to inventory
+            inventory.addItem(item); 
 
             // Display added item
             cout << endl;
@@ -95,13 +97,7 @@ int main(){
 
             // INPUT VALIDATION
             // Ensures input is of type int
-            while(!item_id)
-            {
-                cout << "Please input a valid numeric Product ID: ";
-                cin.clear();
-                cin.ignore(20, '\n');
-                cin >> item_id;
-            }
+            item_id = validate(item_id);
 
             // GET ITEM FROM INVENTORY
             // Tries to get item from inventory using product ID
@@ -111,6 +107,7 @@ int main(){
                 // DISPLAY INFO
                 displayHeaders();
                 displayItemInfo(inventory, item_id);
+                cout << endl;
             }
             catch(const std::exception& e)
             {
@@ -124,8 +121,11 @@ int main(){
             // remove the element from the vector based on provided ID
             cout << setfill('-') << setw(50) << "" << endl;
             cout << "\n\t\t   REMOVE AN ITEM" << endl;
-            cout << "\nEnter the product ID to remove: ";
+            cout << "\nEnter the Product ID to remove: ";
             cin >> item_id;
+
+            // Validate ID
+            item_id = validate(item_id);
 
             try
             {
@@ -138,7 +138,8 @@ int main(){
                 cout << endl;
             }
             catch(const exception& e){
-                cerr << "Error! " << e.what() << endl;
+                cerr << "\nError! " << e.what() << endl;
+                cout << endl;
             }
             break;
 
