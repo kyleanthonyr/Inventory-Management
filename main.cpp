@@ -30,8 +30,7 @@ the overall inventory system.
 using namespace std;
 
 // FUNCTION PROTOTYPES
-void displayItemInfo(Product);
-void displayDefaultItem(Product itemToFind);
+void displayItemInfo(Inventory, int);
 void displayMenu();
 Product getProduct(Product);
 void showInventory(vector<Product>);
@@ -55,7 +54,7 @@ int main(){
     Product itemToAdd;
     vector<Product> allItems;
     Product itemToFind, itemToRemove;
-    int itemID, menuChoice;
+    int item_id, menuChoice;
     char input;
 
     // Create interactive menu session for user
@@ -80,8 +79,8 @@ int main(){
         {
         case 1:
             // USER INTERFACE
-            cout << "\t\tADD AN ITEM" << endl;
-
+            cout << setfill('-') << setw(50) << "" << endl;
+            cout << "\n\t\tADD AN ITEM" << endl;
 
             // ADD ITEM TO INVENTORY
             itemToAdd = getProduct(itemToAdd); // get product info from user
@@ -89,11 +88,42 @@ int main(){
 
             break;
         case 2:
-            cout << "You selected option 2." << endl;
+            // USER PROMPT
+            // Prompts user for product ID to be found
+            cout << "Enter the Product ID: ";
+            cin >> item_id;
+
+            // INPUT VALIDATION
+            // Ensures input is of type int
+            while(!item_id)
+            {
+                cout << "Please input a valid numeric Product ID: ";
+                cin.clear();
+                cin.ignore(20, '\n');
+                cin >> item_id;
+            }
+
+            // GET ITEM FROM INVENTORY
+            // Tries to get item from inventory using product ID
+            // Throws an error if ID is not found
+            try
+            {
+                // DISPLAY INFO
+                cout << "\t\tDISPLAY INFO\n";
+                displayItemInfo(inventory, item_id);
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << '\n';
+
+            }
+
             break;
+
         case 3:
             cout << "You selected option 3." << endl;
             break;
+
         case 4:
             // LIST ALL INVENTORY
             showInventoryCount(inventory);
@@ -114,34 +144,6 @@ int main(){
     } while (tolower(input) == 'y');
 
     cout << "Thanks for using the inventory program!" << endl;
-
-
-    // LIST ALL INVENTORY
-    // See all items in inventory
-    // allItems = inventory.getAllItems();
-
-    // cout << "The following items are currently held in inventory: " << endl;
-    // cout << "Item Name: " << endl;
-    // for (const Product &item : allItems)
-    // {
-    //     cout << "    " << setw(20) << left 
-    //          << toTitleCase(item.name) 
-    //          << endl;
-    // }
-
-    // GET AN ITEM & DESCRIPTION
-    // get item: encompass it in a try/except block to account for NotFound error
-
-    // DISPLAY DEFAULT ITEM
-    // itemToFind = inventory.getItem(1);
-    // displayDefaultItem(itemToFind);
-
-    // add item
-    // inventory.addItem(item2);
-
-    // display total items
-    // itemCount = inventory.getItemCount();
-    // cout << "Total items in inventory: " << itemCount << endl;
 
     // // REMOVE AN ITEM
     // // remove the element from the vector based on provided ID
@@ -168,29 +170,35 @@ int main(){
 // This function displays a single item's details such as *
 // its ID, name, price and quantity in stock              *
 //*********************************************************
-void displayItemInfo(Product item)
+void displayItemInfo(Inventory inventory, int product_id)
 {
-        cout << "Product ID: " << item.product_id << endl
-        << "Name: " << toTitleCase(item.name) << endl
-        << "Price: $" << setprecision(2) << fixed << item.price << endl
-        << "Quantity: " << item.quantity << " in stock." << endl;
+    // Retrieve the item from inventory using product_id
+    Product item;
+
+    // Return struct for item with given id
+    item = inventory.getItem(product_id);
+
+    // Format output
+    cout << "+" << setfill('-') << setw(48) << "-+" << endl;
+
+    // Display headers with ID, Name, Price and Quantity
+    cout << "|" << setfill(' ') << "\t" << left <<  setw(5)  << "ID"
+         << left << setw(15)  << "Name"
+         << left << setw(10)  << "Price"
+         << left << setw(10)  << "Quantity\t|" << endl;
+
+    cout << "+" << setfill('-') << setw(48) << "+" << endl;
+
+    // Display Item retrieved by product id
+    cout << "|" << left << setfill(' ') << "\t" <<  setw(5)  << item.product_id
+         << left << setw(15)  << toTitleCase(item.name)
+         << "$" <<  left << setw(10) << fixed << setprecision(2) << item.price // Set precision for floating point numbers
+         << left << setw(5)  << item.quantity << "\t|" << endl;
+
+    cout << "+" << setfill('_') << setw(48) << "+" << endl;
+
 }
 
-//*********************************************************
-// This function displays the default item for user to get*
-// an idea of the data to input for an item in inventory. *
-//*********************************************************
-
-void displayDefaultItem(Product itemToFind)
-{
-    try{
-        cout << "Reference the default item example for the data to enter: " << endl;
-        displayItemInfo(itemToFind);
-    }
-    catch (const exception& e){
-        cerr << "Error! " << e.what() << endl;
-    }
-}
 
 //*********************************************************
 // This function displays the user interface menu for     *
@@ -199,11 +207,11 @@ void displayDefaultItem(Product itemToFind)
 void displayMenu()
 {
     cout << "\t\tINVENTORY PROGRAM" << endl;
-    cout << "(1) Add an item to the inventory." << endl;
-    cout << "(2) Remove an item from inventory." << endl;
-    cout << "(3) Display information for an item." << endl;
-    cout << "(4) Display all items in inventory." << endl;
-    cout << "Please select a menu option: ";
+    cout << "\n\t(1) Add an item to the inventory." << endl;
+    cout << "\t(2) Display information for an item." << endl;
+    cout << "\t(3) Remove an item from inventory." << endl;
+    cout << "\t(4) Display all items in inventory." << endl;
+    cout << "\nPlease select a menu option: ";
 }
 
 //*********************************************************

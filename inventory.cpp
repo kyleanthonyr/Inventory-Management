@@ -55,6 +55,7 @@ void Inventory::addItem(Product item)
     allItems.push_back(item);
 
     // Output message indicating new item has been added to inventory
+    cout << endl;
     cout << toTitleCase(item.name) 
          << " has been added to the inventory!" << endl;
 
@@ -85,7 +86,7 @@ Product Inventory::removeItem(int productID)
     }
     
     // throw an error if the element was not found
-    throw runtime_error("No product with that ID was found!"); 
+    throw runtime_error("No product with that ID was found! Try again."); 
 
 }
 
@@ -105,7 +106,7 @@ Product Inventory::getItem(int productID) const
     }
     
     // throws an error if the element was not found
-    throw runtime_error("No product with that ID was found!"); 
+    throw runtime_error("No product with that ID was found! Try again."); 
 
 }
 
