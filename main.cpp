@@ -125,7 +125,7 @@ int main(){
             cout << "The following items are currently held in inventory: " << endl;
             displayHeaders();
             showInventory(allItems);
-            cout << "+" << setfill('_') << setw(48) << "" << "+" << endl;
+            cout << "+" << setfill('-') << setw(47) << "" << "+" << endl;
 
             // Give the count of total items in inventory
             itemCount = inventory.getItemCount();
@@ -165,7 +165,8 @@ int main(){
 void displayHeaders()
 {
     // Format output
-    cout << "+" << setfill('-') << setw(48) << "-+" << endl;
+    cout << "+" << setfill('-') << setw(47) << "" << "+" << endl;
+
 
     // Display headers with ID, Name, Price and Quantity
     cout << "|" << setfill(' ') << "\t" << left <<  setw(5)  << "ID"
@@ -186,7 +187,8 @@ void displayItemInfo(Inventory inventory, int product_id)
     // Return struct for item with given id
     item = inventory.getItem(product_id);
 
-    cout << "+" << setfill('-') << setw(48) << "+" << endl;
+    cout << "+" << setfill('-') << setw(47) << "" << "+" << endl;
+
 
     // Display Item retrieved by product id
     cout << "|" << left << setfill(' ') << "\t" <<  setw(5)  << item.product_id
@@ -194,13 +196,14 @@ void displayItemInfo(Inventory inventory, int product_id)
          << "$" <<  left << setw(10) << fixed << setprecision(2) << item.price // Set precision for floating point numbers
          << left << setw(5)  << item.quantity << "\t|" << endl;
 
-    cout << "+" << setfill('_') << setw(48) << "+" << endl;
+    cout << "+" << setfill('-') << setw(47) << "" << "+" << endl;
+
 
 }
 
 void displayItemInfo(Product item)
 {
-    cout << "+" << setfill('-') << setw(48) << "+" << endl;
+    cout << "+" << setfill('-') << setw(47) << "" << "+" << endl;
 
     // Display Item retrieved by product id
     cout << "|" << left << setfill(' ') << "\t" <<  setw(5)  << item.product_id
