@@ -30,31 +30,21 @@ the overall inventory system.
 using namespace std;
 
 // FUNCTION PROTOTYPES
+void displayHeaders();
 void displayItemInfo(Inventory, int);
+void displayItemInfo(Product);
 void displayMenu();
 Product getProduct(Product);
 void showInventory(vector<Product>);
-void showInventoryCount(Inventory);
 
 int main(){
     // initialize class with default item as example
     Inventory inventory;
-    Product item2 = {2, "Item 2", 10.00, 12};
-
-    // Dynammically allocate a pointer to an inventory obj
-    // Inventory *invPtr = nullptr;
-    // invPtr = new Inventory(defaultItem);
-
-    // smart pointer
-    // unique_ptr<vector<Product>> inventory(new vector<Product>());
-
-    // adding elements to inventory
-    // inventory->push_back({2, "Knife", 34.99, 5});
 
     Product itemToAdd;
     vector<Product> allItems;
     Product itemToFind, itemToRemove;
-    int item_id, menuChoice;
+    int item_id, menuChoice, itemCount;
     char input;
 
     // Create interactive menu session for user
@@ -110,6 +100,7 @@ int main(){
             {
                 // DISPLAY INFO
                 cout << "\t\tDISPLAY INFO\n";
+                displayHeaders();
                 displayItemInfo(inventory, item_id);
             }
             catch(const std::exception& e)
@@ -125,14 +116,20 @@ int main(){
             break;
 
         case 4:
-            // LIST ALL INVENTORY
-            showInventoryCount(inventory);
+            cout << "\t\tALL INVENTORY\n";
 
             // Returns a vector of Product structs with each item
             allItems = inventory.getAllItems(); 
 
             // Show all items to user
+            cout << "The following items are currently held in inventory: " << endl;
+            displayHeaders();
             showInventory(allItems);
+            cout << "+" << setfill('_') << setw(48) << "" << "+" << endl;
+
+            // Give the count of total items in inventory
+            itemCount = inventory.getItemCount();
+            cout << "Total Items: " << itemCount << endl;
 
             break;
         }
@@ -165,6 +162,17 @@ int main(){
 
 
 // FUNCTION DECLARATION
+void displayHeaders()
+{
+    // Format output
+    cout << "+" << setfill('-') << setw(48) << "-+" << endl;
+
+    // Display headers with ID, Name, Price and Quantity
+    cout << "|" << setfill(' ') << "\t" << left <<  setw(5)  << "ID"
+         << left << setw(15)  << "Name"
+         << left << setw(10)  << "Price"
+         << left << setw(10)  << "Quantity\t|" << endl;
+}
 
 //*********************************************************
 // This function displays a single item's details such as *
@@ -178,15 +186,6 @@ void displayItemInfo(Inventory inventory, int product_id)
     // Return struct for item with given id
     item = inventory.getItem(product_id);
 
-    // Format output
-    cout << "+" << setfill('-') << setw(48) << "-+" << endl;
-
-    // Display headers with ID, Name, Price and Quantity
-    cout << "|" << setfill(' ') << "\t" << left <<  setw(5)  << "ID"
-         << left << setw(15)  << "Name"
-         << left << setw(10)  << "Price"
-         << left << setw(10)  << "Quantity\t|" << endl;
-
     cout << "+" << setfill('-') << setw(48) << "+" << endl;
 
     // Display Item retrieved by product id
@@ -199,6 +198,17 @@ void displayItemInfo(Inventory inventory, int product_id)
 
 }
 
+void displayItemInfo(Product item)
+{
+    cout << "+" << setfill('-') << setw(48) << "+" << endl;
+
+    // Display Item retrieved by product id
+    cout << "|" << left << setfill(' ') << "\t" <<  setw(5)  << item.product_id
+         << left << setw(15)  << toTitleCase(item.name)
+         << "$" <<  left << setw(10) << fixed << setprecision(2) << item.price // Set precision for floating point numbers
+         << left << setw(5)  << item.quantity << "\t|" << endl;
+
+}
 
 //*********************************************************
 // This function displays the user interface menu for     *
@@ -213,6 +223,7 @@ void displayMenu()
     cout << "\t(4) Display all items in inventory." << endl;
     cout << "\nPlease select a menu option: ";
 }
+
 
 //*********************************************************
 // This function gets the item information from the user  *
@@ -242,42 +253,20 @@ Product getProduct(Product itemToAdd){
 //*********************************************************
 void showInventory(vector<Product> allItems)
 {
-    cout << "The following items are currently held in inventory: " << endl;
-
-    // Display headers with ID, Name, Price and Quantity
-    cout << setw(5) << "ID"
-         << setw(15) << "Name"
-         << setw(10) << "Price"
-         << setw(10) << "Quantity" << endl;
+    // // Display headers with ID, Name, Price and Quantity
+    // cout << setw(5) << "ID"
+    //      << setw(15) << "Name"
+    //      << setw(10) << "Price"
+    //      << setw(10) << "Quantity" << endl;
 
 
     for (const Product &item : allItems)
     // Display the items stored in the vector allItems
     {
-    cout << setw(5) << item.product_id
-         << setw(15) << item.name
-         << setw(10) << fixed << setprecision(2) << item.price // Set precision for floating point numbers
-         << setw(10) << item.quantity << endl;
+    // cout << setw(5) << item.product_id
+    //      << setw(15) << item.name
+    //      << setw(10) << fixed << setprecision(2) << item.price // Set precision for floating point numbers
+    //      << setw(10) << item.quantity << endl;
+        displayItemInfo(item);
     }
-}
-
-//*********************************************************
-// This function displays the total items in inventory    *
-// and formats the message differently depending on the   *
-// total.                                                 *
-//*********************************************************
-void showInventoryCount(Inventory inventory)
-{
-    // Display the total items in inventory using static member variable
-    int itemCount;
-    itemCount = inventory.getItemCount();
-
-    // Handle different cases
-    if(itemCount > 1)
-        cout << "There are currently " << itemCount << " items in inventory." << endl;
-    else if(itemCount == 1)
-        cout << "There is currently only " << itemCount << " item in inventory." << endl;
-    else
-        cout << "There are currently no items in inventory." << endl;
-
 }
