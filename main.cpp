@@ -60,21 +60,37 @@ int main(){
         // HANDLE USER CHOICE with SWITCH 
         switch (menuChoice)
         {
-        case 1:
+        case 1: // ADD ITEM TO INVENTORY
             // USER INTERFACE
+            cout << endl;
             cout << setfill('-') << setw(50) << "" << endl;
             cout << "\n\t\tADD AN ITEM" << endl;
 
-            // ADD ITEM TO INVENTORY
+            // Add item
             itemToAdd = getProduct(itemToAdd); // get product info from user
             inventory.addItem(itemToAdd); // add product to inventory
 
+            // Display added item
+            cout << endl;
+            displayHeaders();
+            displayItemInfo(itemToAdd);
+            cout << "+" << setfill('-') << setw(47) << "" << "+" << endl;
+
+            // Output message indicating new item has been added to inventory
+            cout << endl;
+            cout << toTitleCase(itemToAdd.name) 
+                << " has been added to the inventory!" << endl;
+            cout << endl;
+
             break;
-        case 2:
+        case 2: // DISPLAY ITEM INFO
             // USER PROMPT
             // Prompts user for product ID to be found
+            cout << endl;
+            cout << setfill('-') << setw(50) << "" << endl;
             cout << "Enter the Product ID: ";
             cin >> item_id;
+            cout << endl;
 
             // INPUT VALIDATION
             // Ensures input is of type int
@@ -104,11 +120,32 @@ int main(){
 
             break;
 
-        case 3:
-            cout << "You selected option 3." << endl;
+        case 3: // REMOVE AN ITEM
+            // remove the element from the vector based on provided ID
+            cout << endl;
+            cout << setfill('-') << setw(50) << "" << endl;
+            cout << "\t\tREMOVE AN ITEM" << endl;
+            cout << "\nEnter the product ID to remove: ";
+            cin >> item_id;
+
+            try
+            {
+                itemToRemove = inventory.removeItem(item_id);
+                cout << endl;
+                cout << toTitleCase(itemToRemove.name) << " was removed from inventory!" << endl;
+                displayItemInfo(itemToRemove);
+                cout << endl;
+                cout << "+" << setfill('-') << setw(47) << ""
+                     << "+" << endl;
+            }
+            catch(const exception& e){
+                cerr << "Error! " << e.what() << endl;
+            }
             break;
 
-        case 4:
+        case 4: // DISPLAY ALL INVENTORY
+            cout << endl;
+            cout << setfill('-') << setw(50) << "" << endl;
             cout << "\t\tALL INVENTORY\n";
 
             // Returns a vector of Product structs with each item
@@ -131,24 +168,13 @@ int main(){
         // REPEAT LOOP
         cout << "Return to the main menu? (Y/N): ";
         cin >> input;
+        cout << endl;
+        cout << setfill('-') << setw(49) << "-" << endl;
+        cout << endl;
+
     } while (tolower(input) == 'y');
 
     cout << "Thanks for using the inventory program!" << endl;
-
-    // // REMOVE AN ITEM
-    // // remove the element from the vector based on provided ID
-    // cout << "Enter the product ID to remove: " << endl;
-    // cin >> itemID;
-
-    // try
-    // {
-    //     itemToRemove = inventory.removeItem(itemID);
-    //     cout << "The following item was removed from the inventory!" << endl;
-    //     displayItemInfo(itemToRemove);
-    // }
-    // catch(const exception& e){
-    //     cerr << "Error! " << e.what() << endl;
-    // }
 
     return 0;
 }

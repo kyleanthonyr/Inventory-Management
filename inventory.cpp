@@ -1,5 +1,6 @@
 #include "Inventory.hpp"
 #include "Product.hpp"
+// #include "utilities.cpp"
 #include <vector>
 #include <iostream>
 #include <cctype>
@@ -54,11 +55,6 @@ void Inventory::addItem(Product item)
     // Add a new item to the inventory
     allItems.push_back(item);
 
-    // Output message indicating new item has been added to inventory
-    cout << endl;
-    cout << toTitleCase(item.name) 
-         << " has been added to the inventory!" << endl;
-
     // increment the total items in inventory
     Inventory::itemsCount++;
 }
@@ -79,7 +75,16 @@ Product Inventory::removeItem(int productID)
         {
             // removes the element found at the index
             allItems.erase(allItems.begin()+i);
-            
+
+            // Decrement itemsCount static member variable
+            if(itemsCount == 0)
+            {
+                cout << "There are no items to remove!" << endl;
+            } else
+            {
+                itemsCount--;
+            }
+
             // returns the item that was removed
             return allItems[i];
         }

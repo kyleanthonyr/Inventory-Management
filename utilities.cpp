@@ -14,6 +14,11 @@
 using namespace std;
 
 // FUNCTION DECLARATION
+
+//*********************************************************
+// This function displays the headers for an item such as *
+// ID, Name, Price and Quantity.                          *
+//*********************************************************
 void displayHeaders()
 {
     // Format output
