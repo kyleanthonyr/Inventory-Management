@@ -31,11 +31,11 @@ the overall inventory system.
 using namespace std;
 
 int main(){
-    // initialize class with default item as example
-    Inventory inventory;
+    // VARIABLES
+    Inventory inventory; // instance of inventory class
 
-    Product itemToAdd;
-    vector<Product> allItems;
+    Product item;
+    vector<Product> allItems; // vector of Products containing items in inventory
     Product itemToFind, itemToRemove;
     int item_id, menuChoice, itemCount;
     char input;
@@ -64,21 +64,21 @@ int main(){
             // USER INTERFACE
             cout << endl;
             cout << setfill('-') << setw(50) << "" << endl;
-            cout << "\n\t\tADD AN ITEM" << endl;
+            cout << "\n\t\t   ADD AN ITEM" << endl;
 
             // Add item
-            itemToAdd = getProduct(itemToAdd); // get product info from user
-            inventory.addItem(itemToAdd); // add product to inventory
+            item = getProduct(item); // get product info from user
+            inventory.addItem(item); // add product to inventory
 
             // Display added item
             cout << endl;
             displayHeaders();
-            displayItemInfo(itemToAdd);
+            displayItemInfo(item);
             cout << "+" << setfill('-') << setw(47) << "" << "+" << endl;
 
             // Output message indicating new item has been added to inventory
             cout << endl;
-            cout << toTitleCase(itemToAdd.name) 
+            cout << toTitleCase(item.name) 
                 << " has been added to the inventory!" << endl;
             cout << endl;
 
@@ -86,8 +86,9 @@ int main(){
         case 2: // DISPLAY ITEM INFO
             // USER PROMPT
             // Prompts user for product ID to be found
-            cout << endl;
             cout << setfill('-') << setw(50) << "" << endl;
+            cout << "\n\t\t   DISPLAY INFO\n";
+            cout << endl;
             cout << "Enter the Product ID: ";
             cin >> item_id;
             cout << endl;
@@ -108,7 +109,6 @@ int main(){
             try
             {
                 // DISPLAY INFO
-                cout << "\t\tDISPLAY INFO\n";
                 displayHeaders();
                 displayItemInfo(inventory, item_id);
             }
@@ -122,21 +122,20 @@ int main(){
 
         case 3: // REMOVE AN ITEM
             // remove the element from the vector based on provided ID
-            cout << endl;
             cout << setfill('-') << setw(50) << "" << endl;
-            cout << "\t\tREMOVE AN ITEM" << endl;
+            cout << "\n\t\t   REMOVE AN ITEM" << endl;
             cout << "\nEnter the product ID to remove: ";
             cin >> item_id;
 
             try
             {
-                itemToRemove = inventory.removeItem(item_id);
+                item = inventory.removeItem(item_id);
                 cout << endl;
-                cout << toTitleCase(itemToRemove.name) << " was removed from inventory!" << endl;
-                displayItemInfo(itemToRemove);
-                cout << endl;
+                cout << toTitleCase(item.name) << " was removed from inventory!" << endl;
+                displayItemInfo(item);
                 cout << "+" << setfill('-') << setw(47) << ""
                      << "+" << endl;
+                cout << endl;
             }
             catch(const exception& e){
                 cerr << "Error! " << e.what() << endl;
@@ -144,15 +143,14 @@ int main(){
             break;
 
         case 4: // DISPLAY ALL INVENTORY
-            cout << endl;
             cout << setfill('-') << setw(50) << "" << endl;
-            cout << "\t\tALL INVENTORY\n";
+            cout << "\n\t\t   ALL INVENTORY\n";
 
             // Returns a vector of Product structs with each item
             allItems = inventory.getAllItems(); 
 
             // Show all items to user
-            cout << "The following items are currently held in inventory: " << endl;
+            cout << "\nThe following items are currently held in inventory: " << endl;
             displayHeaders();
             showInventory(allItems);
             cout << "+" << setfill('-') << setw(47) << "" << "+" << endl;
@@ -160,6 +158,7 @@ int main(){
             // Give the count of total items in inventory
             itemCount = inventory.getItemCount();
             cout << "Total Items: " << itemCount << endl;
+            cout << endl;
 
             break;
         }
