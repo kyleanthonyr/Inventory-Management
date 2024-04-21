@@ -102,6 +102,8 @@ void displayHeaders()
 //*********************************************************
 // This function displays a single item's details such as *
 // its ID, name, price and quantity in stock              *
+// Accepts instance of Inventory class and product ID to  *
+// display                                                *
 //*********************************************************
 void displayItemInfo(Inventory inventory, int product_id)
 {
@@ -131,7 +133,7 @@ void displayItemInfo(Inventory inventory, int product_id)
 
 //*********************************************************
 // This is an overloaded version of displayItemInfo()     *
-// it takes a struct of type Product as an argument       *
+// it takes an instance of struct Product as an argument  *
 //*********************************************************
 void displayItemInfo(Product item)
 {
